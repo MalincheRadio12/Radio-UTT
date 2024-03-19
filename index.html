@@ -276,11 +276,13 @@
 </head>
 
 <body>
-     <div id="offline-message" style="display: none; background-color: rgba(0, 0, 0, 0.8); color: white; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 999;">
-            <h1>Sin conexión a Internet</h1>
-            <!-- Puedes personalizar este mensaje como desees -->
-        </div>
-        
+     <div id="offline-message" style="display: none; background-color: rgba(0, 0, 0, 0.8); color: white; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 999;">
+    <h1>Sin conexión a Internet</h1>
+    <img src="js/no-wifi.png" alt="Imagen de conexión perdida" style="width: 100px; height: auto;">
+    <!-- Puedes personalizar este mensaje como desees -->
+</div>
+
+
     <video autoplay muted loop id="video-background" preload="auto">
         <source src="js/fondo.mp4" type="video/mp4">
         <!-- Agrega formatos adicionales del video aquí si es necesario -->
@@ -288,9 +290,9 @@
       </video>
       
     <div id="contador">
-        <a href="https://www.contadorvisitasgratis.com" title="contador de visitas com">
-            <img src="https://counter11.optistats.ovh/private/contadorvisitasgratis.php?c=74nm6xyk6yxy84z7c1xespkgd253fns2" border="0" title="contador de visitas com" alt="contador de visitas com">
-        </a>
+         <a href="https://www.contadorvisitasgratis.com" title="contador de visitas com">
+        <img src="https://counter11.optistats.ovh/private/contadorvisitasgratis.php?c=zu2hhc6e6ln7g3xfhx1a1y1cwbgyynqk" border="0" title="contador de visitas com" alt="contador de visitas com">
+    </a>
     </div>
 
     <div id="lunaradio">
@@ -398,7 +400,7 @@
         setInterval(nextImage, 5000);
     </script>
      
-     <script>
+    <script>
     function checkOnlineStatus() {
         var offlineMessage = document.getElementById("offline-message");
         if (!navigator.onLine) {
@@ -409,7 +411,7 @@
     }
 
     window.addEventListener("load", function() {
-        checkOnlineStatus();
+        setTimeout(checkOnlineStatus, 1000); // Espera 1 segundo antes de verificar la conexión al iniciar la aplicación
 
         window.addEventListener("online", function() {
             checkOnlineStatus();
@@ -420,6 +422,7 @@
         });
     });
 </script>
+
 
 <script>
     function checkOnlineStatus() {
@@ -520,7 +523,6 @@
 </body>
 
 </html>
-
 
 
 
