@@ -364,6 +364,12 @@
         <div id="map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15054.376712369289!2d-97.9665994!3d19.386717!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cffced901ddce7%3A0x900a8087658724ce!2sUniversidad%20Tecnol%C3%B3gica%20de%20Tlaxcala!5e0!3m2!1ses-419!2smx!4v1703809831513!5m2!1ses-419!2smx" width="150" height="160" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> <!-- Pega aquí el código de inserción de Google Maps -->
         </div>
+
+        <div id="offline-message" style="display: none; background-color: rgba(0, 0, 0, 0.8); color: white; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 999;">
+            <h1>Sin conexión a Internet</h1>
+            <!-- Puedes personalizar este mensaje como desees -->
+        </div>
+        
     </div>
 
     <script src="./script.js"> </script>
@@ -389,7 +395,53 @@
         // Cambia el tiempo (en milisegundos) según tus necesidades
         setInterval(nextImage, 5000);
     </script>
-    
+     
+     <script>
+    function checkOnlineStatus() {
+        var offlineMessage = document.getElementById("offline-message");
+        if (!navigator.onLine) {
+            offlineMessage.style.display = "flex";
+        } else {
+            offlineMessage.style.display = "none";
+        }
+    }
+
+    window.addEventListener("load", function() {
+        checkOnlineStatus();
+
+        window.addEventListener("online", function() {
+            checkOnlineStatus();
+        });
+
+        window.addEventListener("offline", function() {
+            checkOnlineStatus();
+        });
+    });
+</script>
+
+<script>
+    function checkOnlineStatus() {
+        var offlineMessage = document.getElementById("offline-message");
+        if (!navigator.onLine) {
+            offlineMessage.style.display = "flex";
+        } else {
+            offlineMessage.style.display = "none";
+        }
+    }
+
+    window.addEventListener("load", function() {
+        checkOnlineStatus();
+
+        window.addEventListener("online", function() {
+            checkOnlineStatus();
+        });
+
+        window.addEventListener("offline", function() {
+            checkOnlineStatus();
+        });
+    });
+</script>
+
 
 
     <script>
@@ -466,7 +518,6 @@
 </body>
 
 </html>
-
 
 
 
