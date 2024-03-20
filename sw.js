@@ -1,49 +1,63 @@
+const CACHE_NAME = 'malinche-radio';
+const CACHE_EXPIRATION = 20 * 60; // 20 minutos en segundos
+
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-      caches.open('malinche-radio').then((cache) => {
-        return cache.addAll([
-          '/',
-          '/index.html',
-          '/js/lunaradio-sincors.js',
-          
-          // Agrega aquí los recursos adicionales que tu PWA necesita en caché
-        ]);
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/js/lunaradio-sincors.js',
+        // Agrega aquí los recursos adicionales que tu PWA necesita en caché
+      ]);
+    })
+  );
+});
+
+self.addEventListener('activate', e => {
+  const cacheWhitelist = [CACHE_NAME];
+
+  e.waitUntil(
+    caches.keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheWhitelist.indexOf(cacheName) === -1) {
+              return caches.delete(cacheName);
+            }
+          })
+        );
       })
-    );
-  });
-  
-  self.addEventListener('activate', e => {
-    const cacheWhitelist = [CACHE_NAME]
-  
-    e.waitUntil(
-      caches.keys()
-        .then(cacheNames => {
-          return Promise.all(
-            cacheNames.map(cacheName => {
-              //Eliminamos lo que ya no se necesita en cache
-              if (cacheWhitelist.indexOf(cacheName) === -1) {
-                return caches.delete(cacheName)
-              }
-            })
-          )
-        })
-        // Le indica al SW activar el cache actual
-        .then(() => self.clients.claim())
-    )
-  })
-  
-  //cuando el navegador recupera una url
-  self.addEventListener('fetch', e => {
-    //Responder ya sea con el objeto en caché o continuar y buscar la url real
-    e.respondWith(
-      caches.match(e.request)
-        .then(res => {
-          if (res) {
-            //recuperar del cache
-            return res
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.match(e.request).then(response => {
+        const fetchPromise = fetch(e.request).then(networkResponse => {
+          // Si la respuesta se encuentra en caché, la actualizamos
+          if (response) {
+            cache.put(e.request, networkResponse.clone());
           }
-          //recuperar de la petición a la url
-          return fetch(e.request)
-        })
-    )
-  })
+          return networkResponse;
+        });
+        return response || fetchPromise;
+      });
+    })
+  );
+});
+
+// Manejar la expiración de la caché
+self.addEventListener('message', event => {
+  if (event.data === 'clearCache') {
+    caches.open(CACHE_NAME).then(cache => {
+      cache.keys().then(keys => {
+        keys.forEach(key => {
+          cache.delete(key);
+        });
+      });
+    });
+  }
+});
