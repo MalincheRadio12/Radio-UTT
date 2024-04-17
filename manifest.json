@@ -1,6 +1,6 @@
 {
-  "name": "Malinche Radio",
-  "short_name": "Radio",
+  "name": "Radio UTT",
+  "short_name": "Radio UTT",
   "description": "Radio Online",
   "start_url": "/?utm_source=web_app_manifest",
   "display": "standalone",
@@ -62,3 +62,4 @@
   ]
   
 }
+
