@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
     
-
 <head>
     
     <meta charset="UTF-8">
@@ -9,14 +8,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Radio">
-    <link rel="apple-touch-icon" href="js/01.png">
-    <meta name="msapplication-TileImage" content="js/01.png">
+    <link rel="apple-touch-icon" href="js/8.png">
+    <meta name="msapplication-TileImage" content="js/8.png">
     <meta name="msapplication-TileColor" content="#000000">
     <link rel="manifest" href="./manifest.json">
+    <script src="tuscript.js" defer></script>
 
     
-    <title>Radio UTT</title>
-    <link rel="shortcut icon" href="js/01.png" />
+    <title>Radio UTT..!! 📻 </title>
+    <link rel="shortcut icon" href="js/8.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
@@ -260,6 +260,10 @@
     font-size: max(16px, 2vw); /* Establece el tamaño de fuente mínimo entre 18px y 2vw */
 }
 
+#offline-message h1 {
+    font-size: 7vw; /* Cambia el tamaño del texto según tus preferencias */
+}
+
 #video-background {
   position: fixed;
   top: 0;
@@ -269,6 +273,134 @@
   z-index: -1;
 }
 
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+#chat-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+    transition: opacity 0.5s ease-in-out;
+    max-width: 350px;
+    width: 90vw;
+}
+
+#chat-modal.show {
+    display: block;
+}
+
+#chat-container {
+    text-align: center;
+    font-size: 18px;
+}
+
+#chat-messages {
+    max-height: 30vh;
+    overflow-y: auto;
+    margin-bottom: 2vh;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat-input {
+    width: 70%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#send-chat-btn {
+    width: 25%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#send-chat-btn:hover {
+    background-color: #0056b3;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Ajustes generales para el botón de chat en vivo */
+#chat-btn {
+    position: fixed;
+    bottom: 2vh; /* Más cerca del borde inferior */
+    right: 2vw;  /* Más cerca del borde derecho */
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vh; /* Tamaño de fuente similar a los otros botones */
+    padding: 2vh;   /* Relleno similar a los otros botones */
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: pulse 1s infinite; /* Animación aplicada de forma continua */
+    transition: background-color 0.3s;
+}
+
+/* Ajustes específicos para dispositivos móviles */
+@media (max-width: 768px) {
+    #chat-btn {
+        font-size: 3vw; /* Tamaño de fuente ajustado para móviles */
+        padding: 3vw;   /* Relleno ajustado para móviles */
+    }
+}
+
+/* Animación de pulsación */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Efecto de hover (opcional) para cambiar el color del fondo */
+#chat-btn:hover {
+    background-color: #0056b3;
+}
 
 
 
@@ -283,6 +415,8 @@
 </div>
 
 
+
+
     <video autoplay muted loop id="video-background" preload="auto">
         <source src="js/Fondo6.mp4" type="video/mp4">
         <!-- Agrega formatos adicionales del video aquí si es necesario -->
@@ -290,15 +424,39 @@
       </video>
       
     <div id="contador">
-        <a href="https://www.contadorvisitasgratis.com" title="contador de visitas para web">
-            <img src="https://counter4.optistats.ovh/private/contadorvisitasgratis.php?c=ucek5elfxm7r21zmrnlcb7yg1f9k4ud2" border="0" title="contador de visitas para web" alt="contador de visitas para web">
+        <a href="https://www.contadorvisitasgratis.com" title="gadgets contador de visitas">
+            <img src="https://counter4.optistats.ovh/private/contadorvisitasgratis.php?c=s97kxjxpwpjn4c76g5x84hf7e29b7qqj" border="0" title="gadgets contador de visitas" alt="gadgets contador de visitas">
         </a>
     </div>
 
     <div id="lunaradio">
         
-
         </div>
+    </div>
+
+    <!-- Agrega esto al final del body de tu HTML -->
+<div id="notification" style="display: none;">
+    <p>¡Estás escuchando Radio UTT!</p>
+</div>
+    
+
+    <div id="chat-btn">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <div id="chat-modal">
+        <div class="modal-close-btn" onclick="closeChatModal()">&times;</div>
+        <div id="chat-container">
+            <h2>Chat en Vivo 💬</h2>
+            <div id="chat-messages"></div>
+            
+            <div id="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+                <button id="send-chat-btn" onclick="sendMessage()">Enviar</button>
+                
+            </div>
+        </div>
+        
     </div>
 
     <div id="comment-btn">
@@ -381,13 +539,48 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15054.376712369289!2d-97.9665994!3d19.386717!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cffced901ddce7%3A0x900a8087658724ce!2sUniversidad%20Tecnol%C3%B3gica%20de%20Tlaxcala!5e0!3m2!1ses-419!2smx!4v1703809831513!5m2!1ses-419!2smx" width="150" height="160" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> <!-- Pega aquí el código de inserción de Google Maps -->
         </div>
 
-    
+
         
     </div>
 
     <script src="./script.js"> </script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/lunaradio-sincors.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+
+
+
+    <script>
+        // Función para mostrar la notificación
+        function showNotification() {
+            // Verifica si el navegador soporta las Notificaciones Web
+            if ("Notification" in window) {
+                // Pide permiso al usuario para mostrar notificaciones
+                Notification.requestPermission().then(function(result) {
+                    if (result === "granted") {
+                        // Crea y muestra la notificación
+                        var notification = new Notification("Radio UTT", {
+                            body: "Estás escuchando Radio UTT.",
+                            icon: "js/7.png",
+                            badge: "js/7.png",
+                            vibrate: [200, 100, 200]
+                             // Ruta a la imagen de la notificación (cambia esto a tu ruta de imagen)
+                        });
+
+                        // Cierra la notificación después de unos segundos
+                        setTimeout(function() {
+                            notification.close();
+                        }, 5000); // Cambia el valor de 5000 a la cantidad de milisegundos que deseas que la notificación permanezca visible
+                    }
+                });
+            }
+        }
+
+        // Llama a la función showNotification cada 10 minutos
+        setInterval(showNotification, 600000); // 600000 milisegundos = 10 minutos
+    </script>
+
 
     <script>
         // Agrega este script para el cambio de imágenes
@@ -409,29 +602,6 @@
         setInterval(nextImage, 5000);
     </script>
      
-    <script>
-    function checkOnlineStatus() {
-        var offlineMessage = document.getElementById("offline-message");
-        if (!navigator.onLine) {
-            offlineMessage.style.display = "flex";
-        } else {
-            offlineMessage.style.display = "none";
-        }
-    }
-
-    window.addEventListener("load", function() {
-        setTimeout(checkOnlineStatus, 1000); // Espera 1 segundo antes de verificar la conexión al iniciar la aplicación
-
-        window.addEventListener("online", function() {
-            checkOnlineStatus();
-        });
-
-        window.addEventListener("offline", function() {
-            checkOnlineStatus();
-        });
-    });
-</script>
-
 
 <script>
     function checkOnlineStatus() {
@@ -532,7 +702,6 @@
 </body>
 
 </html>
-
 
 
 
