@@ -549,39 +549,31 @@ body {
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
 
-
-
     <script>
-        // Función para mostrar la notificación
-        function showNotification() {
-            // Verifica si el navegador soporta las Notificaciones Web
-            if ("Notification" in window) {
-                // Pide permiso al usuario para mostrar notificaciones
-                Notification.requestPermission().then(function(result) {
-                    if (result === "granted") {
-                        // Crea y muestra la notificación
-                        var notification = new Notification("Radio UTT", {
-                            body: "Estás escuchando Radio UTT.",
-                            icon: "js/7.png",
-                            badge: "js/7.png",
-                            vibrate: [200, 100, 200]
-                             // Ruta a la imagen de la notificación (cambia esto a tu ruta de imagen)
-                        });
-
-                        // Cierra la notificación después de unos segundos
-                        setTimeout(function() {
-                            notification.close();
-                        }, 5000); // Cambia el valor de 5000 a la cantidad de milisegundos que deseas que la notificación permanezca visible
+        // Verificar si el navegador soporta notificaciones
+        if ('Notification' in window) {
+            // Solicitar permiso para mostrar notificaciones
+            Notification.requestPermission().then(function(permission) {
+                // Si se concede el permiso, configurar notificaciones periódicas
+                if (permission === 'granted') {
+                    function showNotification() {
+                        const notificationOptions = {
+                            body: '¡Estás escuchando Radio UTT!',
+                            icon: 'js/7.png', // Asegúrate de tener un ícono en tu servidor
+                            badge: 'js/7.png', // Asegúrate de tener una insignia en tu servidor
+                        };
+                        new Notification('Radio UTT', notificationOptions);
                     }
-                });
-            }
+                    
+                    // Mostrar una notificación inmediatamente
+                    showNotification();
+
+                    // Configurar la notificación para que aparezca cada 10 minutos (600,000 ms)
+                    setInterval(showNotification, 600000);
+                }
+            });
         }
-
-        // Llama a la función showNotification cada 10 minutos
-        setInterval(showNotification, 600000); // 600000 milisegundos = 10 minutos
     </script>
-
-
     <script>
         // Agrega este script para el cambio de imágenes
         var currentIndex = 0;
@@ -702,6 +694,7 @@ body {
 </body>
 
 </html>
+
 
 
 
